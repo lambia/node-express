@@ -1,0 +1,26 @@
+{
+	"configurations": [
+		{
+			"name": "Avvia Node con Hot Reload",
+			"request": "launch",
+			"runtimeArgs": [
+				"run-script",
+				"dev"
+			],
+			"runtimeExecutable": "npm",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node"
+		},
+		{
+			"name": "Avvia Node",
+			"program": "${workspaceFolder}/server.js",
+			"request": "launch",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node"
+		}
+	]
+}
