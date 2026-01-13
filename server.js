@@ -34,11 +34,16 @@ app.get('/', (req, res) => {
 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
 });
 
-app.get("/menu", (req, res) => {
+app.get("/pizze", (req, res) => {
 	// res.type("json").send(menu);
 	// o più semplicemente: 
 	res.json(menu);
-})
+});
+
+app.get("/pizze/:id", (req, res) => {
+	console.log(req.params.id)
+	res.send(`Hai richiesto la pizza con id: ${req.params.id}`)
+});
 
 app.get("/debug", (req, res) => {
 	const richiestaSemplificata = {
@@ -62,4 +67,4 @@ app.get("/debug", (req, res) => {
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)
-})
+});
