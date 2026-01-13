@@ -40,9 +40,9 @@ app.get("/pizze", (req, res) => {
 	res.json(menu);
 });
 
-app.get("/pizze/:id", (req, res) => {
-	console.log(req.params.id)
-	res.send(`Hai richiesto la pizza con id: ${req.params.id}`)
+app.get("/pizze/:indice", (req, res) => {
+	console.log(req.params.indice)
+	res.send(`Hai richiesto la pizza con id: ${req.params.indice}`)
 });
 
 app.get("/debug", (req, res) => {
