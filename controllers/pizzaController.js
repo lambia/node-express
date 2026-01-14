@@ -22,7 +22,8 @@ function show(req, res) {
 
 		res.status(404);
 
-		res.json({
+		//Il return serve ad interrompere davvero la funzione
+		return res.json({
 			error: "Not found",
 			message: "Pizza non trovata"
 		});
@@ -51,7 +52,8 @@ function destroy(req, res) {
 
 		res.status(404);
 
-		res.json({
+		//Il return serve ad interrompere davvero la funzione
+		return res.json({
 			error: "Not found",
 			message: "Pizza non trovata"
 		});
