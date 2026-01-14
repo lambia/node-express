@@ -19,11 +19,8 @@ function show(req, res) {
 	const result = pizzas.find(pizza => pizza.id === id);
 
 	if (!result) {
-
-		res.status(404);
-
 		//Il return serve ad interrompere davvero la funzione
-		return res.json({
+		return res.status(404).json({
 			error: "Not found",
 			message: "Pizza non trovata"
 		});
@@ -49,11 +46,8 @@ function destroy(req, res) {
 	const result = pizzas.find(pizza => pizza.id === id);
 
 	if (!result) {
-
-		res.status(404);
-
 		//Il return serve ad interrompere davvero la funzione
-		return res.json({
+		return res.status(404).json({
 			error: "Not found",
 			message: "Pizza non trovata"
 		});
