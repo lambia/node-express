@@ -14,7 +14,9 @@
 - Partiamo dall'esempio in documentazione Express.
 - Aggiungiamo le varie rotte da gestire.
 - Eventualmente aggiungiamo il middleware per file statici
-- Creiamo un file /routers/entità.js con le sue rotte a partire da l'istanza di express.Router()
+- Creiamo un file /data/entità.js che esporta i dati necessari (finto database)
+- Creiamo un file /controllers/entitàController.js che esporta le funzioni che useremo nel router (index, show, store, update, modify, destroy)
+- Creiamo un file /routers/entità.js che istanzia express.Router(), imposta le rotte usando il controller ed esporta il router
 - Importiamo i router da server.js e ne facciamo "use"
 
 # Avvio progetto
