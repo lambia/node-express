@@ -1,43 +1,46 @@
 const express = require('express');
 const router = express.Router();
 
-const menu = [
-	{
-		name: "Margherita",
-		image: "imgs/pizze/margherita.webp",
-		ingredients: ["pomodoro", "mozzarella"],
-	}, {
-		name: "Marinara",
-		image: "imgs/pizze/marinara.jpeg",
-		ingredients: ["pomodoro", "aglio", "origano"],
-	}, {
-		name: "Diavola",
-		image: "imgs/pizze/diavola.jpeg",
-		ingredients: ["pomodoro", "mozzarella", "salame piccante"],
-	}, {
-		name: "Bufalina",
-		image: "imgs/pizze/bufalina.jpeg",
-		ingredients: ["pomodoro", "mozzarella di bufala"],
-	}, {
-		name: "4 formaggi",
-		image: "imgs/pizze/4_formaggi.jpeg",
-		ingredients: ["pomodoro", "mozzarella", "gorgonzola", "parmigiano", "ricotta"],
-	}
-];
+const pizzas = require("../data/pizzas");
 
 //index
 router.get("/", (req, res) => {
-	res.json(menu);
+
+	let results = pizzas;
+
+	if (req.query.ingredients) {
+
+		const needle = req.query.ingredients;
+		results = pizzas.filter(pizza => pizza.ingredients.includes(needle));
+
+	}
+
+	res.json(results);
+
 });
 
 // show
 router.get("/:id", (req, res) => {
-	console.log(req.params.id)
-	res.send(`Hai richiesto la pizza con id: ${req.params.id}`)
+
+	const id = parseInt(req.params.id);
+	const result = pizzas.find(pizza => pizza.id === id);
+
+	if (!result) {
+
+		res.status(404);
+
+		res.json({
+			error: "Not found",
+			message: "Pizza non trovata"
+		});
+	}
+
+	res.json(result);
+
 });
 
 // store
-router.post('', function (req, res) {
+router.post('/', function (req, res) {
 	res.send('Creazione nuova pizza');
 });
 
@@ -53,7 +56,26 @@ router.patch('/:id', function (req, res) {
 
 // destroy
 router.delete('/:id', function (req, res) {
-	res.send('Eliminazione della pizza ' + req.params.id);
+
+	const id = parseInt(req.params.id);
+	const result = pizzas.find(pizza => pizza.id === id);
+
+	if (!result) {
+
+		res.status(404);
+
+		res.json({
+			error: "Not found",
+			message: "Pizza non trovata"
+		});
+	}
+
+	const pizzaIndex = pizzas.indexOf(result);
+
+	pizzas.splice(pizzaIndex, 1);
+
+	res.sendStatus(204);
+
 });
 
 module.exports = router;
