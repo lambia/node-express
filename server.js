@@ -34,17 +34,6 @@ app.get('/', (req, res) => {
 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
 });
 
-app.get("/pizze", (req, res) => {
-	// res.type("json").send(menu);
-	// o più semplicemente: 
-	res.json(menu);
-});
-
-app.get("/pizze/:indice", (req, res) => {
-	console.log(req.params.indice)
-	res.send(`Hai richiesto la pizza con id: ${req.params.indice}`)
-});
-
 app.get("/debug", (req, res) => {
 	const richiestaSemplificata = {
 		query: req.query, //query params come ?chiave=valore
@@ -64,6 +53,17 @@ app.get("/debug", (req, res) => {
 
 	res.json(richiestaSemplificata);
 });
+
+/* INIZIO PIZZE */
+app.get("/pizze", (req, res) => {
+	res.json(menu);
+});
+
+app.get("/pizze/:id", (req, res) => {
+	console.log(req.params.id)
+	res.send(`Hai richiesto la pizza con id: ${req.params.id}`)
+});
+/* FINE PIZZE */
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)
