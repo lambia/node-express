@@ -4,15 +4,27 @@ const port = 3000
 
 const pizzasRouter = require("./routers/pizzas");
 
+//importo il middleware
+const checkTimeMiddleware = require("./middlewares/checkTime");
+
+//Middleware per uso globale
+// app.use(checkTimeMiddleware);
+
 // in produzione è consigliabile bypassare con reverse proxy nginx configurato per servire direttamente i file statici
 // oppure si può aggiungere un layer di caching sempre con nginx o con varnish
 app.use(express.static("public"));
 //body parser per evitare req.body=undefined
 app.use(express.json());
 
+
 app.get('/', (req, res) => {
 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
 });
+
+//Middleware per uso su route specifica
+// app.get('/prova', checkTimeMiddleware, (req, res) => {
+// 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
+// });
 
 app.get("/debug", (req, res) => {
 	const richiestaSemplificata = {
@@ -34,7 +46,10 @@ app.get("/debug", (req, res) => {
 	res.json(richiestaSemplificata);
 });
 
-app.use("/pizzas", pizzasRouter);
+//Middleware su gruppo di rotte
+// app.use("/pizzas", checkTimeMiddleware);
+
+app.use("/pizzas", checkTimeMiddleware, pizzasRouter);
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)
