@@ -6,6 +6,8 @@ const pizzasRouter = require("./routers/pizzas");
 
 //importo il middleware
 const checkTimeMiddleware = require("./middlewares/checkTime");
+const errorsHandlerMiddleware = require("./middlewares/errorsHandler");
+const notFoundMiddleware = require("./middlewares/notFound");
 
 //Middleware per uso globale
 // app.use(checkTimeMiddleware);
@@ -23,6 +25,7 @@ app.get('/', (req, res) => {
 
 //Middleware per uso su route specifica
 // app.get('/prova', checkTimeMiddleware, (req, res) => {
+// throw new Error("Si è spaccato qualcosa");
 // 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
 // });
 
@@ -50,6 +53,12 @@ app.get("/debug", (req, res) => {
 // app.use("/pizzas", checkTimeMiddleware);
 
 app.use("/pizzas", checkTimeMiddleware, pizzasRouter);
+
+//Penultimo: Se nessuna rotta soddisfa la richiesta
+app.use(notFoundMiddleware);
+
+//Ultimo: Se c'è un errore (potrebbe essere un errore nel middleware notfound)
+app.use(errorsHandlerMiddleware);
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)
