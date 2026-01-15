@@ -60,6 +60,13 @@ function update(req, res) {
 		});
 	}
 
+	if (!req.body.name || !req.body.image || !req.body.ingredients) {
+		return res.status(400).json({
+			error: "Cannot update",
+			message: "Passare un oggetto intero o usare PATCH"
+		});
+	}
+
 	result.name = req.body.name;
 	result.image = req.body.image;
 	result.ingredients = req.body.ingredients;
@@ -68,7 +75,30 @@ function update(req, res) {
 }
 
 function modify(req, res) {
-	// copiamo la logica dell'update
+
+	const id = parseInt(req.params.id);
+	const result = pizzas.find(pizza => pizza.id === id);
+
+	if (!result) {
+		//Il return serve ad interrompere davvero la funzione
+		return res.status(404).json({
+			error: "Not found",
+			message: "Pizza non trovata"
+		});
+	}
+
+	if (req.body.name) { result.name = req.body.name; }
+	if (req.body.image) { result.image = req.body.image; }
+	if (req.body.ingredients) { result.ingredients = req.body.ingredients; }
+
+	if (!req.body.name && !req.body.image && !req.body.ingredients) {
+		return res.status(400).json({
+			error: "Cannot update",
+			message: "Specificare proprietà valide"
+		});
+	}
+
+	res.json(result);
 }
 
 function destroy(req, res) {
