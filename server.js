@@ -1,11 +1,14 @@
 const express = require('express')
-const pizzasRouter = require("./routers/pizzas");
 const app = express()
 const port = 3000
+
+const pizzasRouter = require("./routers/pizzas");
 
 // in produzione è consigliabile bypassare con reverse proxy nginx configurato per servire direttamente i file statici
 // oppure si può aggiungere un layer di caching sempre con nginx o con varnish
 app.use(express.static("public"));
+//body parser per evitare req.body=undefined
+app.use(express.json());
 
 app.get('/', (req, res) => {
 	res.type("html").send('<h1>Benvenuto nel server della mia pizzeria</h1>');
