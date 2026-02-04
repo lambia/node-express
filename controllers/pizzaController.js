@@ -1,14 +1,15 @@
 const pizzas = require("../data/pizzas");
+const db = require("../db/index.js");
 
-function index(req, res) {
+async function index(req, res) {
 
-	let results = pizzas;
+	let results = [];
 
-	if (req.query.ingredients) {
-
-		const needle = req.query.ingredients;
-		results = pizzas.filter(pizza => pizza.ingredients.includes(needle));
-
+	try {
+		const risultati = await db.query(`SELECT id, title FROM posts`);
+		results = risultati.rows;
+	} catch (error) {
+		console.log("Connection error: ", err.message);
 	}
 
 	res.json(results);
