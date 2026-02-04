@@ -19,6 +19,9 @@
 - Creiamo un file /routers/entità.js che istanzia express.Router(), imposta le rotte usando il controller ed esporta il router
 - Importiamo i router da server.js e ne facciamo "use"
 
+# Configuriamo DB
+- Sul database possiamo usare `SET log_min_duration_statement = 100;` per abilitare il logging di richieste che richiedono più di 100ms. Troviamo i log sotto: `/var/log/postgresql/postgresql-*.log`
+
 # Avvio progetto
 - Se si clona una repo: `npm install` o `npm i` per creare il package-lock e la cartella node_modules.
 Utile anche se abbiamo "fatto casino" e vogliamo eliminare e ricreare tutto.
