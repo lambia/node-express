@@ -13,7 +13,7 @@ const checkTimeMiddleware = require("../middlewares/checkTime");
 // router.get("/", checkTimeMiddleware, pizzaController.index);
 
 router.get("/", pizzaController.index);
-router.get("/:id", pizzaController.show);
+// router.get("/:id", pizzaController.show);
 router.post('/', pizzaController.store);
 router.put('/:id', pizzaController.update);
 router.patch('/:id', pizzaController.modify);

@@ -67,7 +67,7 @@ async function show(req, res) {
 
 	const response = {
 		success,
-		payload: rows
+		payload: rows[0]
 	};
 
 	if (!success) {
@@ -79,21 +79,42 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-	const pizzasIdsList = pizzas.map(pizza => pizza.id);
-	const lastId = Math.max(...pizzasIdsList);
-	const newId = lastId + 1;
+	console.log("okok")
+	const { title, tags } = req.body;
 
-	const nuovaPizza = {
-		id: newId,
-		name: req.body.name,
-		image: req.body.image,
-		ingredients: req.body.ingredients
+	if (!title || !title.trim().length || title.trim().length < 4) {
+		throw new Error("Titolo non valido");
+	}
+
+	if (!tags || !tags.length || !Array.isArray(tags)) {
+		//si possono controllare anche i singoli valori ma per DB basta che sia array []
+		throw new Error("Tag non validi");
+	}
+
+	//per inserire sul db è meglio avvertire postgres che $2 è di un certo ::tipo per applicare il casting
+	const statement = `INSERT INTO posts (title, tags) VALUES ($1, $2::json) RETURNING *`;
+	//sarebbe più corretto: "RETURNING id" o comunque recuperare solo i campi necessari
+
+	//tags arriva come array (decodificato da un json) -> lo facciamo tornare ad essere JSON
+	const params = [title, JSON.stringify(tags)];
+
+	const { rows, rowCount } = await db.query(statement, params);
+
+	const success = (rowCount == 1);
+	const statusCode = success ? 201 : 404;
+
+	const response = {
+		success,
+		payload: rows[0]
 	};
 
-	pizzas.push(nuovaPizza);
+	if (!success) {
+		response.error = "Errore imprevisto";
+		response.message = "Impossibile aggiungere l'elemento";
+	}
 
-	res.status(201);
-	res.json(pizzas[pizzas.length - 1]);
+	res.status(statusCode).json(response);
+
 }
 
 async function update(req, res) {
