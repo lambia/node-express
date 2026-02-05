@@ -1,5 +1,5 @@
-const pizzas = require("../data/pizzas");
-const db = require("../db/index.js");
+import pizzas from '../data/pizzas.js';
+import db from '../db/index.js';
 
 async function indexUno(req, res) {
 	//Uso un try / catch
@@ -191,4 +191,11 @@ async function destroy(req, res) {
 }
 
 // esportiamo tutto
-module.exports = { index, show, store, update, modify, destroy }
+export default {
+	index,
+	show,
+	store,
+	update,
+	modify,
+	destroy
+};

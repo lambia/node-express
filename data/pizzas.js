@@ -27,4 +27,4 @@ const pizzas = [
 	}
 ];
 
-module.exports = pizzas;
+export default pizzas;

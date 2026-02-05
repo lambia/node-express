@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 
 const paramConnessione = {
 	connectionString: process.env.DATABASE_URL
@@ -11,4 +11,4 @@ let db = new Pool(paramConnessione);
 // 	client.on("notice", msg => console.log("Client notice --> ", msg));
 // })
 
-module.exports = db;
+export default db;

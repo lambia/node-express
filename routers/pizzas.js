@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const pizzaController = require("../controllers/pizzaController");
+import pizzaController from '../controllers/pizzaController.js';
 
 //Importo il middleware
-const checkTimeMiddleware = require("../middlewares/checkTime");
+import checkTimeMiddleware from '../middlewares/checkTime.js';
 
 //Middleware per uso su Router
 // router.use(checkTimeMiddleware);
@@ -19,4 +19,4 @@ router.put('/:id', pizzaController.update);
 router.patch('/:id', pizzaController.modify);
 router.delete('/:id', pizzaController.destroy);
 
-module.exports = router;
+export default router;

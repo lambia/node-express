@@ -1,14 +1,14 @@
-require('dotenv/config')
-const express = require('express')
+import 'dotenv/config';
+import express from 'express';
 const app = express()
 const port = 3000
 
-const pizzasRouter = require("./routers/pizzas");
+import pizzasRouter from './routers/pizzas.js';
 
 //importo il middleware
-const checkTimeMiddleware = require("./middlewares/checkTime");
-const errorsHandlerMiddleware = require("./middlewares/errorsHandler");
-const notFoundMiddleware = require("./middlewares/notFound");
+import checkTimeMiddleware from './middlewares/checkTime.js';
+import errorsHandlerMiddleware from './middlewares/errorsHandler.js';
+import notFoundMiddleware from './middlewares/notFound.js';
 
 //Middleware per uso globale
 // app.use(checkTimeMiddleware);
